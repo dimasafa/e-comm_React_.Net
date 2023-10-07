@@ -16,7 +16,8 @@ builder.Services.AddDbContext<StoreContext>(opt =>
     // Erstellen die Connection
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-
+// Add Cors, um aus Frontend requests zu erhalten(da front und back unterschidliche Domain besitzen)
+builder.Services.AddCors();
 
 
 var app = builder.Build();
@@ -27,6 +28,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Add Cors zum app
+app.UseCors(opt => 
+{
+    // erlauben any Headers, any Methode(get, post usw.), und die domain aus Frontend
+    opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+});
 
 app.UseAuthorization();
 
