@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@emotion/react";
-import Catalog from "../../features/catalog/Catalog";
 import Header from "./Header";
 import { Container, CssBaseline, createTheme } from "@mui/material";
+import { Outlet } from "react-router-dom";
 
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
       <CssBaseline />
       <Header />
       <Container>
-        <Catalog/>
+        <Outlet />
       </Container>
     </ThemeProvider>
 
