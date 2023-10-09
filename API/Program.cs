@@ -1,4 +1,5 @@
 using API.Data;
+using API.Middleware;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,7 +34,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors(opt => 
 {
     // erlauben any Headers, any Methode(get, post usw.), und die domain aus Frontend
-    opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+    opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
 });
 
 app.UseAuthorization();
@@ -50,7 +51,7 @@ try
 {
     // automatische Migration aus DbIntializer. wenn es nötig 
     context.Database.Migrate();
-    DbIntializer.Initialize(context);
+    DbInitializer.Initialize(context);
 }
 catch (Exception ex)
 {

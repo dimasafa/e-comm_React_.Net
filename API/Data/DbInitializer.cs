@@ -1,25 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using API.Entities;
 
-
-// Erstellen Start Daten für unsere Database
 namespace API.Data
 {
-    public static class DbIntializer
+    public static class DbInitializer
     {
-        public static void Initialize (StoreContext context)
+        public static void Initialize(StoreContext context)
         {
-            // If wir haben etwas in unsere Database, dann return.
             if (context.Products.Any()) return;
-
-            // if unsere Database ist leer, dann...
 
             var products = new List<Product>
             {
-		new Product
+                new Product
                 {
                     Name = "Angular Speedster Board 2000",
                     Description =
@@ -214,10 +205,9 @@ namespace API.Data
                     Brand = "Angular",
                     Type = "Boots",
                     QuantityInStock = 100
-                }
+                },
             };
-
-            // Addiren start Daten zum Database
+            
             foreach (var product in products)
             {
                 context.Products.Add(product);
