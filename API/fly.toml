@@ -1,0 +1,40 @@
+# fly.toml app configuration file generated for teststore on 2023-10-15T22:13:35+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "teststore"
+primary_region = "ams"
+
+[build]
+  image = "dimasaa/restore:latest"
+
+[env]
+ASPNETCORE_URLS="http://+:8080"
+StripeSettings__PublishableKey="pk_test_51NzcyyJiM4jRdLvo4kEUhoS8WbOp6bVvkJ5pUELiZZrhx7BOWKclslcWnDOyXodLopOxoz3isLIMuQe81mf7HZqw00QFqMYWdq"
+
+[[services]]
+  http_checks = []
+  internal_port = 8080
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    force_https = true
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"
